@@ -3,8 +3,24 @@ import "./styles/bootstrap-reboot.css";
 import "./styles/bootstrap-utilities.css";
 import "./styles/bootstrap.css";
 import "./App.css";
+import Card from "./components/Card";
+import mockProducts from "./products.json";
+import Cart from "./components/Cart";
+import { useState } from "react";
+
+/* rod11:52
+cambiar nombres de propiedades a ingles
+agregar nueva propiedad `inCart`
+solucionar el bug de que se agrega un producto nuevo cada vez que hacemos click en agregar al carrito
+rod11:54
+pensar en como gestionar nuestro state */
 
 function App() {
+  const [showModal, setShowModal] = useState(false);
+  const [products, setProducts] = useState(
+    mockProducts.map((p) => ({ ...p, inCart: 0 }))
+  );
+  console.log("@products", products);
   return (
     <div className="container">
       <header className="row">
@@ -45,9 +61,12 @@ function App() {
                   <button
                     type="button"
                     className="btn btn-light"
-                    style={{width: "100px"}}
+                    style={{ width: "100px" }}
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal"
+                    onClick={() => {
+                      setShowModal(!showModal);
+                    }}
                   >
                     Ver carrito
                   </button>
@@ -68,12 +87,12 @@ function App() {
             </div>
           </nav>
         </div>
-        <img className="col banner" src="kokekosas.png" alt="Kokekosas" />
+        <img className="col banner" src="media/kokekosas.png" alt="Kokekosas" />
       </header>
-
+      {showModal ? <Cart /> : null}
       <div id="principal" className="row widgets justify-content-evenly">
         <div className="input-group mb-3" id="filtros">
-          <label className="input-group-text" for="inputGroupSelect01">
+          <label className="input-group-text" htmlFor="inputGroupSelect01">
             Filtros
           </label>
           <select className="form-select" id="filtro">
@@ -86,10 +105,11 @@ function App() {
           </select>
         </div>
 
-        <section
-          className="row widgets justify-content-evenly"
-          id="cards"
-        ></section>
+        <section className="row widgets justify-content-evenly" id="cards">
+          {products.map((product) => (
+            <Card product={product} products={products} setProducts={setProducts} key={product.nombre} />
+          ))}
+        </section>
       </div>
 
       <footer className="row justify-content-center">
@@ -97,75 +117,6 @@ function App() {
           <p className="center">Copyright © 2022 Kokekosas</p>
         </div>
       </footer>
-
-      <div
-        className="modal fade"
-        id="exampleModal"
-        tabindex="-1"
-        aria-labelledby="exampleModalLabel"
-        aria-hidden="true"
-      >
-        <div className="modal-dialog">
-          <div className="modal-content">
-            <div className="modal-header">
-              <h5 className="modal-title" id="exampleModalLabel">
-                Tu carrito
-              </h5>
-              <button
-                type="button"
-                className="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div className="modal-body">
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th className="col-3" scope="col">
-                      Nombre
-                    </th>
-                    <th className="col-2" scope="col">
-                      Precio
-                    </th>
-                    <th className="col-2" scope="col">
-                      Cantidad
-                    </th>
-                    <th className="col-3" scope="col">
-                      Precio total
-                    </th>
-                    <th className="col-3" scope="col">
-                      Borrar
-                    </th>
-                  </tr>
-                </thead>
-                <tbody id="tbody"></tbody>
-                <tfoot>
-                  <tr id="tfoot">
-                    <th colspan="12"> No cargaste nada a tu carrito </th>
-                  </tr>
-                </tfoot>
-              </table>
-            </div>
-            <div className="modal-footer">
-              <button
-                type="button"
-                className="btn btn-dark"
-                data-bs-dismiss="modal"
-              >
-                Continuar comprando
-              </button>
-              <button
-                type="button"
-                className="btn btn-light"
-                id="terminarCompra"
-              >
-                Terminar compra
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }
