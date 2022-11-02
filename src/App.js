@@ -6,21 +6,34 @@ import "./App.css";
 import Card from "./components/Card";
 import mockProducts from "./products.json";
 import Cart from "./components/Cart";
-import { useState } from "react";
+import { useReducer, useState } from "react";
 
-/* rod11:52
-cambiar nombres de propiedades a ingles
-agregar nueva propiedad `inCart`
-solucionar el bug de que se agrega un producto nuevo cada vez que hacemos click en agregar al carrito
-rod11:54
-pensar en como gestionar nuestro state */
+/* rod11:12
+finish logic of ADD_PRODUCT action
+add new action REMOVE_PRODUCT  */
+
+function reducer(state, action) {
+  const selectedId = action.id;
+  if (action.type === "ADD_PRODUCT") {
+    return { ...state, [action.id]: state.selectedId + 1 }
+  } else if (action.type === "REMOVE_PRODUCT") {
+    return;
+  }
+}
+
+function normalizeCart(products) {
+  return products.reduce((acc, product) => {
+    return { ...acc, [product.id]: 0 };
+  }, {});
+}
 
 function App() {
   const [showModal, setShowModal] = useState(false);
   const [products, setProducts] = useState(
     mockProducts.map((p) => ({ ...p, inCart: 0 }))
   );
-  console.log("@products", products);
+  const [cart, dispatch] = useReducer(reducer, mockProducts, normalizeCart);
+  console.log("@cart", cart);
   return (
     <div className="container">
       <header className="row">
@@ -107,7 +120,13 @@ function App() {
 
         <section className="row widgets justify-content-evenly" id="cards">
           {products.map((product) => (
-            <Card product={product} products={products} setProducts={setProducts} key={product.nombre} />
+            <Card
+              dispatch={dispatch}
+              product={product}
+              products={products}
+              setProducts={setProducts}
+              key={product.nombre}
+            />
           ))}
         </section>
       </div>

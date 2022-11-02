@@ -3,11 +3,12 @@ function Card(props) {
   const setProducts = props.setProducts;
   const products = props.products;
   const selectedProduct = products.find((p) => p.name === product.name);
+  const dispatch = props.dispatch;
 
   return (
     <div className="card col-4 col-md-4 col-lg-3">
       <img
-        src={product.imagen}
+        src={product.image}
         className="card-img-top"
         alt={product.name}
       ></img>
@@ -18,10 +19,11 @@ function Card(props) {
         <button
           className="btn btn-dark"
           onClick={() => {
+            dispatch({ type: "ADD_PRODUCT", id: product.id });
             console.log("@selectedProduct", selectedProduct);
             selectedProduct.inCart = selectedProduct.inCart + 1;
             setProducts(products);
-            console.log("@products", products)
+            console.log("@products", products);
           }}
         >
           Agregar {product.name} a carrito
