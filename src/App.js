@@ -15,9 +15,9 @@ add new action REMOVE_PRODUCT  */
 function reducer(state, action) {
   const selectedId = action.id;
   if (action.type === "ADD_PRODUCT") {
-    return { ...state, [action.id]: state.selectedId + 1 }
+    return { ...state, [action.id]: state[selectedId] + 1 }
   } else if (action.type === "REMOVE_PRODUCT") {
-    return;
+    return { ...state, [action.id]: state[selectedId] - 1 }
   }
 }
 
