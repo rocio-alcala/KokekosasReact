@@ -6,7 +6,8 @@ import "./App.css";
 import Card from "./components/Card";
 import mockProducts from "./products.json";
 import Cart from "./components/Cart";
-import { useReducer, useState } from "react";
+import Filter from "./components/Filter";
+import { useReducer, useRef, useState } from "react";
 
 /* rod11:12
 finish logic of ADD_PRODUCT action
@@ -15,9 +16,9 @@ add new action REMOVE_PRODUCT  */
 function reducer(state, action) {
   const selectedId = action.id;
   if (action.type === "ADD_PRODUCT") {
-    return { ...state, [action.id]: state[selectedId] + 1 }
+    return { ...state, [action.id]: state[selectedId] + 1 };
   } else if (action.type === "REMOVE_PRODUCT") {
-    return { ...state, [action.id]: state[selectedId] - 1 }
+    return { ...state, [action.id]: state[selectedId] - 1 };
   }
 }
 
@@ -34,6 +35,7 @@ function App() {
   );
   const [cart, dispatch] = useReducer(reducer, mockProducts, normalizeCart);
   console.log("@cart", cart);
+
   return (
     <div className="container">
       <header className="row">
@@ -89,6 +91,7 @@ function App() {
                       id="addon-wrapping"
                     ></span>
                     <input
+                      style={{ display: "flex" }}
                       id="buscar"
                       type="text"
                       className="form-control"
@@ -102,21 +105,11 @@ function App() {
         </div>
         <img className="col banner" src="media/kokekosas.png" alt="Kokekosas" />
       </header>
-      {showModal ? <Cart /> : null}
+      {showModal ? (
+        <Cart dispatch={dispatch} cart={cart} products={products} />
+      ) : null}
       <div id="principal" className="row widgets justify-content-evenly">
-        <div className="input-group mb-3" id="filtros">
-          <label className="input-group-text" htmlFor="inputGroupSelect01">
-            Filtros
-          </label>
-          <select className="form-select" id="filtro">
-            <option id="masVendido" value="masVendidos">
-              Mas vendidos
-            </option>
-            <option value="precioCreciente">Precio creciente</option>
-            <option value="precioDecreciente">Precio decreciente</option>
-            <option value="alfabetico">A - Z</option>
-          </select>
-        </div>
+          <Filter products={products} setProducts={setProducts} />
 
         <section className="row widgets justify-content-evenly" id="cards">
           {products.map((product) => (
@@ -125,7 +118,7 @@ function App() {
               product={product}
               products={products}
               setProducts={setProducts}
-              key={product.nombre}
+              key={product.id}
             />
           ))}
         </section>
