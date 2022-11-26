@@ -1,8 +1,5 @@
 function Card(props) {
   const product = props.product;
-  const setProducts = props.setProducts;
-  const products = props.products;
-  const selectedProduct = products.find((p) => p.name === product.name);
   const dispatch = props.dispatch;
 
   return (
@@ -20,10 +17,6 @@ function Card(props) {
           className="btn btn-dark"
           onClick={() => {
             dispatch({ type: "ADD_PRODUCT", id: product.id });
-            console.log("@selectedProduct", selectedProduct);
-            selectedProduct.inCart = selectedProduct.inCart + 1;
-            setProducts(products);
-            console.log("@products", products);
           }}
         >
           Agregar {product.name} a carrito

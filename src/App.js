@@ -7,11 +7,13 @@ import Card from "./components/Card";
 import mockProducts from "./products.json";
 import Cart from "./components/Cart";
 import Filter from "./components/Filter";
-import { useReducer, useRef, useState } from "react";
+import { useReducer, useState } from "react";
 
 /* rod11:12
-finish logic of ADD_PRODUCT action
-add new action REMOVE_PRODUCT  */
+rod10:15
+challenge de react
+implementar react-query en kokekosas 
+react query leer docs */
 
 function reducer(state, action) {
   const selectedId = action.id;
@@ -109,7 +111,9 @@ function App() {
         <Cart dispatch={dispatch} cart={cart} products={products} />
       ) : null}
       <div id="principal" className="row widgets justify-content-evenly">
+        <div >
           <Filter products={products} setProducts={setProducts} />
+        </div>
 
         <section className="row widgets justify-content-evenly" id="cards">
           {products.map((product) => (
