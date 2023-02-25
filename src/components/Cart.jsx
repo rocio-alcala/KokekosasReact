@@ -2,6 +2,7 @@ function Cart(props) {
   const cart = props.cart;
   const products = props.products;
   const dispatch = props.dispatch;
+  const setShowCart = props.setShowCart;
   console.log("@productoscargados", products);
   console.log("@carrito", cart);
   return (
@@ -21,9 +22,9 @@ function Cart(props) {
             <button
               type="button"
               className="btn-close"
-              data-bs-dismiss="modal"
               aria-label="Close"
-            ></button>
+              onClick={() => setShowCart(false)}
+            />
           </div>
           <div className="modal-body">
             <table className="table">

@@ -122,7 +122,7 @@ function App() {
         <img className="col banner" src="media/kokekosas.png" alt="Kokekosas" />
       </header>
       {showCart ? (
-        <Cart dispatch={dispatch} cart={cart} products={products} />
+        <Cart dispatch={dispatch} cart={cart} products={products} setShowCart={setShowCart}/>
       ) : null}
       <div id="principal" className="row widgets justify-content-evenly">
         <div>
