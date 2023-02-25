@@ -14,7 +14,6 @@ rod10:15
 challenge de react
 implementar react-query en kokekosas 
 react query leer docs 
-cambiar la syntax del useEffect para usar .then() en vez de async/await
 crear un componente wrapper que envuelva el componente App y que solamente lo renderize cuando el fetch este completo
 */
 
