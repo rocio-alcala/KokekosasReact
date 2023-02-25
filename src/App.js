@@ -34,7 +34,7 @@ function normalizeCart(products) {
 }
 
 function App() {
-  const [showModal, setShowModal] = useState(false);
+  const [showCart, setShowCart] = useState(false);
   const [products, setProducts] = useState([]);
   const [cart, dispatch] = useReducer(reducer, {});
   console.log("@cart", cart);
@@ -107,7 +107,7 @@ function App() {
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal"
                     onClick={() => {
-                      setShowModal(!showModal);
+                      setShowCart(!showCart);
                     }}
                   >
                     Ver carrito
@@ -132,7 +132,7 @@ function App() {
         </div>
         <img className="col banner" src="media/kokekosas.png" alt="Kokekosas" />
       </header>
-      {showModal ? (
+      {showCart ? (
         <Cart dispatch={dispatch} cart={cart} products={products} />
       ) : null}
       <div id="principal" className="row widgets justify-content-evenly">
