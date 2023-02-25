@@ -8,13 +8,15 @@ import Cart from "./components/Cart";
 import Filter from "./components/Filter";
 import { useEffect, useReducer, useState } from "react";
 
-/* rod11:12
+/*
+rod11:12
 rod10:15
 challenge de react
 implementar react-query en kokekosas 
 react query leer docs 
 cambiar la syntax del useEffect para usar .then() en vez de async/await
-crear un componente wrapper que envuelva el componente App y que solamente lo renderize cuando el fetch este completo*/
+crear un componente wrapper que envuelva el componente App y que solamente lo renderize cuando el fetch este completo
+*/
 
 function reducer(state, action) {
   const selectedId = action.id;
@@ -26,7 +28,6 @@ function reducer(state, action) {
     return action.state;
   }
 }
-
 function normalizeCart(products) {
   return products.reduce((acc, product) => {
     return { ...acc, [product.id]: 0 };
@@ -37,29 +38,17 @@ function App() {
   const [showCart, setShowCart] = useState(false);
   const [products, setProducts] = useState([]);
   const [cart, dispatch] = useReducer(reducer, {});
-  console.log("@cart", cart);
-  console.log("@products", products);
-  /*   useEffect(() => {
-    async function fetchData() {
-      const response = await fetch(
-        "https://shoecycle-7u9lzblyo-rodalcala.vercel.app/api/kokekosas/products"
-      );
-      const data = await response.json();
-      setProducts(data);
-      dispatch({ type: "INIT", state: normalizeCart(data) })
-    }
-    fetchData();
-  }, []); */
+
   useEffect(() => {
     fetch(
       "https://shoecycle-7u9lzblyo-rodalcala.vercel.app/api/kokekosas/products"
     )
-      .then((response) => { response.json()})
-      .then((responseJson) => {
-        const data = responseJson;
-        setProducts(data);
-        console.log("@data",data)
-        dispatch({ type: "INIT", state: normalizeCart(data) });
+      .then((response) => {
+        return response.json();
+      })
+      .then((products) => {
+        setProducts(products);
+        dispatch({ type: "INIT", state: normalizeCart(products) });
       });
   }, []);
 
