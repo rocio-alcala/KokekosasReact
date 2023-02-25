@@ -51,7 +51,8 @@ function Cart(props) {
                   .map((productId) => {
                     const product = products.find(
                       (prod) => prod.id === productId
-                    );
+                    )
+                    const quantity = cart[productId]
                     return (
                       <tr key={productId}>
                         <th className="col-3" scope="col">
@@ -61,10 +62,10 @@ function Cart(props) {
                           ${product.price}
                         </th>
                         <th className="col-2" scope="col">
-                          {product.inCart}
+                          {quantity}
                         </th>
                         <th className="col-3" scope="col">
-                         ${product.price}*{product.inCart}
+                         ${product.price*quantity}
                         </th>
                         <th className="col-3" scope="col">
                           <button

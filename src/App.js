@@ -15,6 +15,7 @@ challenge de react
 implementar react-query en kokekosas 
 react query leer docs 
 crear un componente wrapper que envuelva el componente App y que solamente lo renderize cuando el fetch este completo
+style add to cart button so it changes background on focus
 */
 
 function reducer(state, action) {
