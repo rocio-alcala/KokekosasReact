@@ -18,7 +18,7 @@ function Card(props) {
         {isClickedAdd ? <p>Agregado al carrito</p> : null}
         <p className="card-text stock"></p>
         <button
-          className="btn btn-dark"
+          className="btn btn-dark add"
           onClick={() => {
             setIsClickedAdd(true);
             dispatch({ type: "ADD_PRODUCT", id: product.id });

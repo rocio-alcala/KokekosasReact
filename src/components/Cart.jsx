@@ -69,7 +69,7 @@ function Cart(props) {
                         </th>
                         <th className="col-3" scope="col">
                           <button
-                            className="btn btn-dark"
+                            className="btn btn-dark add" 
                             onClick={() => {
                               dispatch({ type: "REMOVE_PRODUCT", id: product.id });
                             }}
