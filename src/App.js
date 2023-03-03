@@ -62,7 +62,7 @@ function App() {
                 Menu
               </a>
               <button
-                className="navbar-toggler"
+                className="navbar-toggler selected"
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#navbarNav"
@@ -91,7 +91,7 @@ function App() {
                   </li>
                   <button
                     type="button"
-                    className="btn btn-light"
+                    className="btn btn-light selected"
                     style={{ width: "100px" }}
                     data-bs-toggle="modal"
                     data-bs-target="#exampleModal"

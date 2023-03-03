@@ -21,7 +21,7 @@ function Cart(props) {
             </h5>
             <button
               type="button"
-              className="btn-close"
+              className="btn-close selected"
               aria-label="Close"
               onClick={() => setShowCart(false)}
             />
@@ -92,12 +92,12 @@ function Cart(props) {
           <div className="modal-footer">
             <button
               type="button"
-              className="btn btn-dark"
+              className="btn btn-dark selected"
               data-bs-dismiss="modal"
             >
               Continuar comprando
             </button>
-            <button type="button" className="btn btn-light" id="terminarCompra">
+            <button type="button" className="btn btn-light selected" id="terminarCompra">
               Terminar compra
             </button>
           </div>

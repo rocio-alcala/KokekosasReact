@@ -51,7 +51,7 @@ footer {
   margin: 20px;
 }
 
-button.add:hover {background-color: rgb(118, 115, 115); 
+button.selected:hover {background-color: rgb(118, 115, 115); 
   border-color: rgb(118, 115, 115) ;
 }
 
