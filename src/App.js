@@ -135,6 +135,7 @@ function App() {
               dispatch={dispatch}
               product={product}
               products={products}
+              cart={cart}
               setProducts={setProducts}
               key={product.id}
             />
