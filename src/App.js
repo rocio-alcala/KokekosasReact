@@ -7,6 +7,7 @@ import Card from "./components/Card";
 import Cart from "./components/Cart";
 import Filter from "./components/Filter";
 import { useEffect, useReducer, useState } from "react";
+import SearchBar from "./components/SearchBar";
 
 /*
 rod11:12
@@ -37,9 +38,8 @@ function normalizeCart(products) {
 function App() {
   const [showCart, setShowCart] = useState(false);
   const [products, setProducts] = useState([]);
+  const [filteredProducts, setFilteredProducts] = useState([]);
   const [cart, dispatch] = useReducer(reducer, {});
-
-
 
   useEffect(() => {
     fetch(
@@ -50,6 +50,7 @@ function App() {
       })
       .then((products) => {
         setProducts(products);
+        setFilteredProducts(products);
         dispatch({ type: "INIT", state: normalizeCart(products) });
       });
   }, []);
@@ -103,19 +104,11 @@ function App() {
                   >
                     Ver carrito
                   </button>
-                  <div className="col input-group flex-wrap">
-                    <span
-                      className="input-group-text"
-                      id="addon-wrapping"
-                    ></span>
-                    <input
-                      style={{ display: "flex" }}
-                      id="buscar"
-                      type="text"
-                      className="form-control"
-                      placeholder="Buscar"
-                    />
-                  </div>
+                  <SearchBar
+                    setFilteredProducts={setFilteredProducts}
+                    filteredProducts={filteredProducts}
+                    products={products}
+                  />
                 </ul>
               </div>
             </div>
@@ -124,7 +117,12 @@ function App() {
         <img className="col banner" src="media/kokekosas.png" alt="Kokekosas" />
       </header>
       {showCart ? (
-        <Cart dispatch={dispatch} cart={cart} products={products} setShowCart={setShowCart}/>
+        <Cart
+          dispatch={dispatch}
+          cart={cart}
+          products={products}
+          setShowCart={setShowCart}
+        />
       ) : null}
       <div id="principal" className="row widgets justify-content-evenly">
         <div>
@@ -132,7 +130,7 @@ function App() {
         </div>
 
         <section className="row widgets justify-content-evenly" id="cards">
-          {products.map((product) => (
+          {filteredProducts.map((product) => (
             <Card
               dispatch={dispatch}
               product={product}
