@@ -39,6 +39,8 @@ function App() {
   const [products, setProducts] = useState([]);
   const [cart, dispatch] = useReducer(reducer, {});
 
+
+
   useEffect(() => {
     fetch(
       "https://shoecycle-7u9lzblyo-rodalcala.vercel.app/api/kokekosas/products"
@@ -134,7 +136,6 @@ function App() {
             <Card
               dispatch={dispatch}
               product={product}
-              products={products}
               cart={cart}
               setProducts={setProducts}
               key={product.id}

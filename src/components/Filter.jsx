@@ -30,7 +30,6 @@ function Filter(props) {
         ref={filtroRef}
         onChange={() => {
           handleSelecction(products, setProducts);
-          console.log(products);
         }}
       >
         <option id="masVendido" value="masVendidos">

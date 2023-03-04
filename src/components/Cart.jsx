@@ -3,8 +3,8 @@ function Cart(props) {
   const products = props.products;
   const dispatch = props.dispatch;
   const setShowCart = props.setShowCart;
-  console.log("@productoscargados", products);
-  console.log("@carrito", cart);
+
+
   return (
     <div
       /*     className="modal fade" */
