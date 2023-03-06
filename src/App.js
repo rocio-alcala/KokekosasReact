@@ -126,7 +126,7 @@ function App() {
       ) : null}
       <div id="principal" className="row widgets justify-content-evenly">
         <div>
-          <Filter products={products} setProducts={setProducts} />
+          <Filter filteredProducts={filteredProducts} setFilteredProducts={setFilteredProducts} /> 
         </div>
 
         <section className="row widgets justify-content-evenly" id="cards">

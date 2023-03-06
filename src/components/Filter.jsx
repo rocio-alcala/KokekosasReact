@@ -1,12 +1,12 @@
 import { useRef } from "react";
 
 function Filter(props) {
-  const setProducts = props.setProducts;
-  const products = props.products;
+  const setFilteredProducts = props.setFilteredProducts;
+  const filteredProducts = props.filteredProducts;
   const filtroRef = useRef(null);
-  const newOrder = [...products]
+  const newOrder = [...filteredProducts]
 
-  function handleSelecction(products, setProducts) {
+  function handleSelecction(filteredProducts, setFilteredProducts) {
     const selecction = filtroRef.current.value;
     if (selecction === "precioCreciente") {
       newOrder.sort((a, b) => a.price - b.price);
@@ -17,7 +17,7 @@ function Filter(props) {
     } else if (selecction === "masVendidos") {
       newOrder.sort((a, b) => a.id - b.id);
     }
-    setProducts(newOrder);
+    setFilteredProducts(newOrder);
   }
   return (
     <div className="input-group mb-3" id="filtros">
@@ -29,7 +29,7 @@ function Filter(props) {
         id="filtro"
         ref={filtroRef}
         onChange={() => {
-          handleSelecction(products, setProducts);
+          handleSelecction(filteredProducts, setFilteredProducts);
         }}
       >
         <option id="masVendido" value="masVendidos">
