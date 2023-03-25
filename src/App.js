@@ -3,11 +3,13 @@ import "./styles/bootstrap-reboot.css";
 import "./styles/bootstrap-utilities.css";
 import "./styles/bootstrap.css";
 import "./App.css";
+import React from "react";
 import Card from "./components/Card";
 import Cart from "./components/Cart";
 import Filter from "./components/Filter";
 import { useEffect, useReducer, useState } from "react";
 import SearchBar from "./components/SearchBar";
+import { useQuery } from "react-query";
 
 /*
 rod11:12
@@ -37,23 +39,24 @@ function normalizeCart(products) {
 
 function App() {
   const [showCart, setShowCart] = useState(false);
-  const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
+  const [products, setProducts] = useState([]);
   const [cart, dispatch] = useReducer(reducer, {});
+  function initData(data) {
+    setProducts(data) ;
+    setFilteredProducts(data) ;
+    dispatch({ type: "INIT", state: normalizeCart(data) });
+  }
 
-  useEffect(() => {
+  const { data, status } = useQuery("products", () => {
     fetch(
       "https://shoecycle-7u9lzblyo-rodalcala.vercel.app/api/kokekosas/products"
     )
       .then((response) => {
         return response.json();
       })
-      .then((products) => {
-        setProducts(products);
-        setFilteredProducts(products);
-        dispatch({ type: "INIT", state: normalizeCart(products) });
-      });
-  }, []);
+      .then((data) =>{ initData(data) ; return data} );
+  });
 
   return (
     <div className="container">
@@ -126,7 +129,10 @@ function App() {
       ) : null}
       <div id="principal" className="row widgets justify-content-evenly">
         <div>
-          <Filter filteredProducts={filteredProducts} setFilteredProducts={setFilteredProducts} /> 
+          <Filter
+            filteredProducts={filteredProducts}
+            setFilteredProducts={setFilteredProducts}
+          />
         </div>
 
         <section className="row widgets justify-content-evenly" id="cards">
@@ -134,8 +140,8 @@ function App() {
             <Card
               dispatch={dispatch}
               product={product}
-              cart={cart}
-              setProducts={setProducts}
+              cart={cart} /* 
+              setProducts={setProducts} */
               key={product.id}
             />
           ))}

@@ -1,3 +1,5 @@
+
+import React from "react";
 import { useRef } from "react";
 
 function Filter(props) {
@@ -6,7 +8,7 @@ function Filter(props) {
   const filtroRef = useRef(null);
   const newOrder = [...filteredProducts]
 
-  function handleSelecction(filteredProducts, setFilteredProducts) {
+  function handleSelecction(setFilteredProducts) {
     const selecction = filtroRef.current.value;
     if (selecction === "precioCreciente") {
       newOrder.sort((a, b) => a.price - b.price);
@@ -29,7 +31,7 @@ function Filter(props) {
         id="filtro"
         ref={filtroRef}
         onChange={() => {
-          handleSelecction(filteredProducts, setFilteredProducts);
+          handleSelecction(setFilteredProducts);
         }}
       >
         <option id="masVendido" value="masVendidos">

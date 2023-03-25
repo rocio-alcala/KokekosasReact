@@ -1,3 +1,5 @@
+import React from "react";
+
 function Cart(props) {
   const cart = props.cart;
   const products = props.products;
