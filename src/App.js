@@ -7,19 +7,10 @@ import React from "react";
 import Card from "./components/Card";
 import Cart from "./components/Cart";
 import Filter from "./components/Filter";
-import { useEffect, useReducer, useState } from "react";
+import { useReducer, useState } from "react";
 import SearchBar from "./components/SearchBar";
 import { useQuery } from "react-query";
 
-/*
-rod11:12
-rod10:15
-challenge de react
-implementar react-query en kokekosas 
-react query leer docs 
-crear un componente wrapper que envuelva el componente App y que solamente lo renderize cuando el fetch este completo
-style add to cart button so it changes background on focus
-*/
 
 function reducer(state, action) {
   const selectedId = action.id;
@@ -31,6 +22,7 @@ function reducer(state, action) {
     return action.state;
   }
 }
+
 function normalizeCart(products) {
   return products.reduce((acc, product) => {
     return { ...acc, [product.id]: 0 };
@@ -42,21 +34,26 @@ function App() {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [products, setProducts] = useState([]);
   const [cart, dispatch] = useReducer(reducer, {});
-  function initData(data) {
-    setProducts(data) ;
-    setFilteredProducts(data) ;
-    dispatch({ type: "INIT", state: normalizeCart(data) });
-  }
 
-  const { data, status } = useQuery("products", () => {
-    fetch(
+  const { data } = useQuery("products", () => {
+    return fetch(
       "https://shoecycle-7u9lzblyo-rodalcala.vercel.app/api/kokekosas/products"
     )
       .then((response) => {
         return response.json();
       })
-      .then((data) =>{ initData(data) ; return data} );
+      .then((fetchedProducts) => {
+        setProducts(fetchedProducts);
+        setFilteredProducts(fetchedProducts);
+        dispatch({ type: "INIT", state: normalizeCart(fetchedProducts) });
+      });
   });
+
+  if (!filteredProducts) { return "loading"
+ 
+  }
+
+  console.log(filteredProducts)
 
   return (
     <div className="container">
@@ -140,8 +137,8 @@ function App() {
             <Card
               dispatch={dispatch}
               product={product}
-              cart={cart} /* 
-              setProducts={setProducts} */
+              cart={cart} 
+              setProducts={setProducts}
               key={product.id}
             />
           ))}
