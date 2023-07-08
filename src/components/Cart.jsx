@@ -9,7 +9,6 @@ function Cart(props) {
 
   return (
     <div
-      /*     className="modal fade" */
       id="exampleModal"
       tabIndex="-1"
       aria-labelledby="exampleModalLabel"

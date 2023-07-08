@@ -53,8 +53,6 @@ function App() {
  
   }
 
-  console.log(filteredProducts)
-
   return (
     <div className="container">
       <header className="row">
