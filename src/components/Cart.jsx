@@ -5,8 +5,7 @@ function Cart(props) {
   const products = props.products;
   const dispatch = props.dispatch;
   const setShowCart = props.setShowCart;
-
-
+console.log(cart)
   return (
     <div
       id="exampleModal"
@@ -52,8 +51,8 @@ function Cart(props) {
                   .map((productId) => {
                     const product = products.find(
                       (prod) => prod.id === productId
-                    )
-                    const quantity = cart[productId]
+                    );
+                    const quantity = cart[productId];
                     return (
                       <tr key={productId}>
                         <th className="col-3" scope="col">
@@ -66,17 +65,19 @@ function Cart(props) {
                           {quantity}
                         </th>
                         <th className="col-3" scope="col">
-                         ${product.price*quantity}
+                          ${product.price * quantity}
                         </th>
                         <th className="col-3" scope="col">
                           <button
-                            className="btn btn-dark add selected" 
+                            className="btn btn-dark add selected"
                             onClick={() => {
-                              
-                              dispatch({ type: "REMOVE_PRODUCT", id: product.id });
+                              dispatch({
+                                type: "REMOVE_PRODUCT",
+                                id: product.id,
+                              });
                             }}
                           >
-                           Borrar
+                            Borrar
                           </button>
                         </th>
                       </tr>
@@ -86,7 +87,9 @@ function Cart(props) {
               <tbody id="tbody"></tbody>
               <tfoot>
                 <tr id="tfoot">
-                  <th colSpan="12"> No cargaste nada a tu carrito </th>
+                  {Object.values(cart).find((item) => item > 0) ? null : (
+                    <th colSpan="12"> No cargaste nada a tu carrito </th>
+                  )}
                 </tr>
               </tfoot>
             </table>
@@ -96,10 +99,16 @@ function Cart(props) {
               type="button"
               className="btn btn-dark selected"
               data-bs-dismiss="modal"
+              onClick={() => setShowCart(false)}
             >
               Continuar comprando
             </button>
-            <button type="button" className="btn btn-light selected" id="terminarCompra">
+            <button
+              type="button"
+              className="btn btn-light selected"
+              id="terminarCompra"
+              //TO-DO: en onClick hacer patch a back end para que cambie stock, derivar a pago, y realizar un nuevo get
+            >
               Terminar compra
             </button>
           </div>

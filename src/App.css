@@ -37,6 +37,8 @@ aside {
   padding: 20px;
 }
 
+.nav-link { background-color: #090b0e;}
+
 footer {
   padding: 50px;
   background: #fff5d6;

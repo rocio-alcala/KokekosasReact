@@ -3,14 +3,14 @@ import "./styles/bootstrap-reboot.css";
 import "./styles/bootstrap-utilities.css";
 import "./styles/bootstrap.css";
 import "./App.css";
-import React from "react";
+import React, { useEffect } from "react";
 import Card from "./components/Card";
 import Cart from "./components/Cart";
 import Filter from "./components/Filter";
 import { useReducer, useState } from "react";
 import SearchBar from "./components/SearchBar";
-import { useQuery } from "react-query";
-
+import ContactForm from "./components/ContactForm";
+import Nosotros from "./components/Nosotros";
 
 function reducer(state, action) {
   const selectedId = action.id;
@@ -34,9 +34,11 @@ function App() {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [products, setProducts] = useState([]);
   const [cart, dispatch] = useReducer(reducer, {});
+  const [pestaña, setPestaña] = useState("home");
 
-  const { data } = useQuery("products", () => {
-    return fetch(
+
+  useEffect(() => {
+    fetch(
       "https://shoecycle-7u9lzblyo-rodalcala.vercel.app/api/kokekosas/products"
     )
       .then((response) => {
@@ -47,10 +49,10 @@ function App() {
         setFilteredProducts(fetchedProducts);
         dispatch({ type: "INIT", state: normalizeCart(fetchedProducts) });
       });
-  });
+  }, []);
 
-  if (!filteredProducts) { return "loading"
- 
+  if (!filteredProducts) {
+    return "loading";
   }
 
   return (
@@ -76,19 +78,32 @@ function App() {
               <div className="collapse navbar-collapse" id="navbarNav">
                 <ul className="navbar-nav">
                   <li className="nav-item">
-                    <a className="nav-link active" href="/" id="home">
+                    <button
+                      className="nav-link"
+                      id="home"
+                      onClick={() => setPestaña("home")}
+                    >
                       Home
-                    </a>
+                    </button>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="/" id="contacto">
+                    <button
+                      className="nav-link"
+                      id="contacto"
+                      onClick={() => setPestaña("contacto")}
+                    >
                       Contacto
-                    </a>
+                    </button>
                   </li>
                   <li className="nav-item">
-                    <a className="nav-link" href="/" id="nosotros">
+                    <button
+                      className="nav-link"
+                      href=""
+                      id="nosotros"
+                      onClick={() => setPestaña("nosotros")}
+                    >
                       Nosotros
-                    </a>
+                    </button>
                   </li>
                   <button
                     type="button"
@@ -123,24 +138,32 @@ function App() {
         />
       ) : null}
       <div id="principal" className="row widgets justify-content-evenly">
-        <div>
-          <Filter
-            filteredProducts={filteredProducts}
-            setFilteredProducts={setFilteredProducts}
-          />
-        </div>
+        {pestaña === "home" ? (
+          <>
+            <div>
+              <Filter
+                filteredProducts={filteredProducts}
+                setFilteredProducts={setFilteredProducts}
+              />
+            </div>
 
-        <section className="row widgets justify-content-evenly" id="cards">
-          {filteredProducts.map((product) => (
-            <Card
-              dispatch={dispatch}
-              product={product}
-              cart={cart} 
-              setProducts={setProducts}
-              key={product.id}
-            />
-          ))}
-        </section>
+            <section className="row widgets justify-content-evenly" id="cards">
+              {filteredProducts.map((product) => (
+                <Card
+                  dispatch={dispatch}
+                  product={product}
+                  cart={cart}
+                  setProducts={setProducts}
+                  key={product.id}
+                />
+              ))}
+            </section>
+          </>
+        ) : pestaña === "contacto" ? (
+          <ContactForm></ContactForm>
+        ) : (
+          <Nosotros></Nosotros>
+        )}
       </div>
 
       <footer className="row justify-content-center">
